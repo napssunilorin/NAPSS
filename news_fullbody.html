@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>NAPSS Unilorin | News</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon-32x32.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background-color: #004D25;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .foo {
+            display: flex;
+            align-items: center;
+        }
+
+        .foo img {
+            max-width: 60px;
+            max-height: 60px;
+            margin-right: 5px;
+        }
+
+        .foo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .bar a {
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #FFC107;
+            color: #004D25;
+            transition: background-color 0.3s ease;
+            border: none;
+            text-decoration: none;
+        }
+
+        .bar a:hover {
+            background-color: #E6B800;
+            color: white;
+        }
+
+        .container {
+            padding: 40px 20px;
+            background-color: white;
+            max-width: 1200px;
+            margin: 40px auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .full-news-article img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .full-news-article h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #004D25;
+            margin-bottom: 20px;
+        }
+
+        .full-news-article p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="foo">
+            <img src="NAPSS logo.jpg" alt="NAPSS Logo">
+            <h1>NAPSS Unilorin</h1>
+        </div>
+        <div class="bar">
+            <a href="news.html">Back to News</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="full-news-container" class="full-news-article">
+            </div>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function loadFullNews() {
+            const articleId = getQueryParam('id');
+            const storedNews = localStorage.getItem('newsArticles');
+            const fullNewsContainer = document.getElementById('full-news-container');
+
+            if (storedNews && articleId) {
+                const newsArticles = JSON.parse(storedNews);
+                const article = newsArticles[parseInt(articleId)];
+
+                if (article) {
+                    fullNewsContainer.innerHTML = `
+                        <h1>${article.title}</h1>
+                        <img src="${article.image}" alt="${article.title}">
+                        <p>${article.content}</p>
+                    `;
+                } else {
+                    fullNewsContainer.innerHTML = '<p class="text-center">Article not found.</p>';
+                }
+            } else {
+                fullNewsContainer.innerHTML = '<p class="text-center">No article specified.</p>';
+            }
+        }
+
+        window.addEventListener('load', loadFullNews);
+    </script>
+</body>
+</html>
