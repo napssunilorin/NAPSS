@@ -7,8 +7,6 @@ module.exports = function(eleventyConfig) {
 
   // Pass through other static files
   eleventyConfig.addPassthroughCopy("NAPSS logo.jpg");
-  eleventyConfig.addPassthroughCopy("homepage.html");
-  eleventyConfig.addPassthroughCopy("news_fullbody.html");
   eleventyConfig.addPassthroughCopy("Departmental building.png");
 
   // A custom collection for your news articles
