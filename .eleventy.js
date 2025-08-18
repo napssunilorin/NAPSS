@@ -33,3 +33,14 @@ module.exports = function(eleventyConfig) {
     }
   };
 };
+
+module.exports = function(eleventyConfig) {
+    // Other configurations...
+    
+    // This line tells Eleventy to copy the 'images' folder to the output directory.
+    eleventyConfig.addPassthroughCopy("img");
+
+    return {
+        // ...
+    };
+};
