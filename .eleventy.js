@@ -1,13 +1,17 @@
 const markdownIt = require("markdown-it");
 
 module.exports = function(eleventyConfig) {
-    // This single line copies the entire `img` folder and all its contents to `_site/img`.
-    eleventyConfig.addPassthroughCopy("img");
+    // Pass through the images folder. This copies the entire folder to _site.
+    eleventyConfig.addPassthroughCopy("im");
     
     // Pass through the admin folder.
     eleventyConfig.addPassthroughCopy("admin");
 
-    // A custom markdown filter to process markdown content in Liquid files.
+    // Pass through individual image files from the root.
+    eleventyConfig.addPassthroughCopy("NAPSS logo.jpg");
+    eleventyConfig.addPassthroughCopy("Departmental building.png");
+
+    // Custom markdown filter to process markdown content in Liquid files.
     eleventyConfig.addFilter("markdown", function(value) {
         let markdown = new markdownIt();
         return markdown.render(value);
