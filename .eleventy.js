@@ -2,7 +2,7 @@ const markdownIt = require("markdown-it");
 
 module.exports = function(eleventyConfig) {
     // Pass through the images folder. This copies the entire folder to _site.
-    eleventyConfig.addPassthroughCopy("images");
+    eleventyConfig.addPassthroughCopy("img");
     
     // Pass through the admin folder.
     eleventyConfig.addPassthroughCopy("admin");
