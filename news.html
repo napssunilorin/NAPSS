@@ -160,7 +160,8 @@
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
-            -webkit-line-clamp: 3; /* Number of lines to show */
+            -webkit-line-clamp: 3;
+            /* Number of lines to show */
             -webkit-box-orient: vertical;
             flex-grow: 1;
         }
@@ -170,7 +171,8 @@
         }
 
         .card-body .read-more-link {
-            margin-top: auto; /* Push the link to the bottom */
+            margin-top: auto;
+            /* Push the link to the bottom */
             background-color: #004D25;
             color: white;
             padding: 10px 15px;
@@ -184,6 +186,7 @@
             background-color: #FFC107;
             color: #004D25;
         }
+
         /* ---------------------------------------------------- */
 
         .advertisement {
@@ -268,146 +271,42 @@
         <h1 class="news-header"
             style="text-align: left; font-weight: bold; font-size: 18px; font-family: Georgia, 'Times New Roman', Times, serif;">
             Latest News</h1>
-        <div class="row news-articles main-news" id="news-container">
+        <div class="row news-articles main-news">
+            {% for article in collections.news %}
+            <div class="col-12 col-md-6 col-lg-4 news-article">
+                <div class="card">
+                    <img src="{{ article.data.image }}" class="card-img-top" alt="{{ article.data.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ article.data.title }}</h5>
+                        <p class="card-text">{{ article.templateContent | truncate(150) | safe }}</p>
+                        <a href="{{ article.url }}" class="read-more-link">Read more</a>
+                    </div>
+                </div>
             </div>
+            {% endfor %}
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
-<script>
-    // Dynamic content for the header
-    const messages = [
-        "National Association of Political Science Students (NAPSS) Unilorin",
-        "...towards National Consciousness & Democratic Advancement.",
-        "Welcome to NAPSS Unilorin Official Website!"
-    ];
-    let currentIndex = 0;
+    <script>
+        // Dynamic content for the header
+        const messages = [
+            "National Association of Political Science Students (NAPSS) Unilorin",
+            "...towards National Consciousness & Democratic Advancement.",
+            "Welcome to NAPSS Unilorin Official Website!"
+        ];
+        let currentIndex = 0;
 
-    function changeMessage() {
-        const dynamicContent = document.getElementById("dynamic-content");
-        dynamicContent.innerHTML = `<h2>${messages[currentIndex]}</h2>`;
-        currentIndex = (currentIndex + 1) % messages.length;
-    }
-    changeMessage();
-    setInterval(changeMessage, 3500);
-
-    // Dynamic Ads for the latest news section (no change needed here)
-    const dynamicAds = [{
-        title: "Ad 1",
-        imageUrl: "images/whatsapplogo.png",
-        content: 'Special Offer: 50% Off!'
-    }, {
-        title: "Ad 2",
-        imageUrl: "images/whatsapplogo.png",
-        content: "New Product Launch!"
-    }, {
-        title: "Ad 3",
-        imageUrl: "images/whatsapplogo.png",
-        content: "Subscribe Now for Updates!"
-    }, {
-        title: "Ad 4",
-        imageUrl: "images/whatsapplogo.png",
-        content: "Limited Time Deal!"
-    }];
-
-    function addDynamicAds() {
-        const newsSection = document.getElementById('news-container');
-        const articles = newsSection.querySelectorAll('.news-article');
-        const adInterval = 3;
-
-        articles.forEach((article, index) => {
-            if ((index + 1) % adInterval === 0 && dynamicAds.length > 0) {
-                const randomIndex = Math.floor(Math.random() * dynamicAds.length);
-                const selectedAd = dynamicAds[randomIndex];
-
-                const adDiv = document.createElement('div');
-                adDiv.classList.add('advertisement');
-
-                const adContent = `
-                    <div class="ad-content">
-                        <h3>${selectedAd.title}</h3>
-                        ${selectedAd.imageUrl ? `<img src="${selectedAd.imageUrl}" alt="${selectedAd.title}" style="max-width: 100%; height: auto;">` : ''}
-                        <p>${selectedAd.content}</p>
-                    </div>`;
-
-                adDiv.innerHTML = adContent;
-
-                const adColumn = document.createElement('div');
-                adColumn.classList.add('col-12', 'col-md-6', 'col-lg-4');
-                adColumn.appendChild(adDiv);
-                article.parentNode.insertBefore(adColumn, article.nextSibling);
-            }
-        });
-    }
-
-    // Function to load and display news articles from Netlify CMS
-    async function loadNews() {
-        const newsContainer = document.getElementById('news-container');
-        newsContainer.innerHTML = '';
-
-        try {
-            // Fetch the list of Markdown files from your posts folder
-            // In a real scenario, you'd fetch a list of files or use a build step
-            const filePaths = ['_posts/2025-08-13-first-news-article.md']; // Example file path
-            
-            // To properly fetch all files in a folder, you would need an API or a pre-built JSON list
-            // For now, this example assumes you have a known list of files to fetch.
-
-            // Initialize the Markdown converter
-            const converter = new showdown.Converter();
-
-            const newsArticles = [];
-            for (const path of filePaths) {
-                const response = await fetch(path);
-                const markdownContent = await response.text();
-                
-                // Use a library like `gray-matter` to parse the front matter and body, 
-                // but for a simple fetch, you can manually split the content.
-                const [frontMatter, body] = markdownContent.split('---').slice(1).map(s => s.trim());
-                
-                // Parse the front matter (YAML) to get the title, date, etc.
-                const lines = frontMatter.split('\n');
-                const article = {};
-                lines.forEach(line => {
-                    const [key, value] = line.split(':').map(s => s.trim());
-                    article[key] = value.replace(/^['"]|['"]$/g, '');
-                });
-
-                // Convert the Markdown body to HTML
-                article.content = converter.makeHtml(body);
-                newsArticles.push(article);
-            }
-            
-            // Generate HTML for each article
-            newsArticles.forEach((article, index) => {
-                const articleHtml = `
-                    <div class="col-12 col-md-6 col-lg-4 news-article">
-                        <div class="card">
-                            <img src="${article.image}" class="card-img-top" alt="${article.title}">
-                            <div class="card-body">
-                                <h5 class="card-title">${article.title}</h5>
-                                <div class="card-text">${article.content}</div>
-                                <a href="news_fullbody.html?id=${index}" class="read-more-link">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                newsContainer.innerHTML += articleHtml;
-            });
-            addDynamicAds();
-
-        } catch (error) {
-            console.error('Failed to load news articles:', error);
-            newsContainer.innerHTML = '<p class="text-center w-100">Failed to load news articles. Please try again later.</p>';
+        function changeMessage() {
+            const dynamicContent = document.getElementById("dynamic-content");
+            dynamicContent.innerHTML = `<h2>${messages[currentIndex]}</h2>`;
+            currentIndex = (currentIndex + 1) % messages.length;
         }
-    }
-
-    window.addEventListener('load', () => {
-        loadNews();
-    });
-</script>
+        changeMessage();
+        setInterval(changeMessage, 3500);
+    </script>
 </body>
 
 </html>

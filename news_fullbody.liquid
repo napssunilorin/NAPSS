@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>NAPSS Unilorin | News</title>
+    <title>NAPSS Unilorin | {{ title }}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/favicon-32x32.png" type="image/png">
@@ -9,6 +9,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
+        /* Your CSS styles go here */
         body {
             font-family: 'Roboto', Arial, Helvetica, sans-serif;
             margin: 0;
@@ -100,45 +101,16 @@
             <h1>NAPSS Unilorin</h1>
         </div>
         <div class="bar">
-            <a href="news.html">Back to News</a>
+            <a href="/news.html">Back to News</a>
         </div>
     </div>
 
     <div class="container">
-        <div id="full-news-container" class="full-news-article">
-            </div>
+        <div class="full-news-article">
+            <h1>{{ title }}</h1>
+            <img src="{{ image }}" alt="{{ title }}">
+            {{ content }}
+        </div>
     </div>
-
-    <script>
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        function loadFullNews() {
-            const articleId = getQueryParam('id');
-            const storedNews = localStorage.getItem('newsArticles');
-            const fullNewsContainer = document.getElementById('full-news-container');
-
-            if (storedNews && articleId) {
-                const newsArticles = JSON.parse(storedNews);
-                const article = newsArticles[parseInt(articleId)];
-
-                if (article) {
-                    fullNewsContainer.innerHTML = `
-                        <h1>${article.title}</h1>
-                        <img src="${article.image}" alt="${article.title}">
-                        <p>${article.content}</p>
-                    `;
-                } else {
-                    fullNewsContainer.innerHTML = '<p class="text-center">Article not found.</p>';
-                }
-            } else {
-                fullNewsContainer.innerHTML = '<p class="text-center">No article specified.</p>';
-            }
-        }
-
-        window.addEventListener('load', loadFullNews);
-    </script>
 </body>
 </html>
