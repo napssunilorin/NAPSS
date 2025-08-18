@@ -109,7 +109,7 @@ permalink: /news/
         }
 
         .news-hero {
-            background-image: url('img/Departmental building.png');
+            background-image: url('/img/Departmental building.png');
             background-size: cover;
             background-position: center;
             height: 300px;
@@ -263,7 +263,7 @@ permalink: /news/
             <h2>(Unilorin Chapter)</h2>
         </div>
         <div class="bar">
-            <a href="homepage.html">Home</a>
+            <a href="/homepage.html">Home</a>
         </div>
     </div>
 
@@ -279,7 +279,7 @@ permalink: /news/
             {% for article in collections.news %}
             <div class="col-12 col-md-6 col-lg-4 news-article">
                 <div class="card">
-                    <img src="img/{{ article.data.image }}" class="card-img-top" alt="{{ article.data.title }}">
+                    <img src="/img/{{ article.data.image }}" class="card-img-top" alt="{{ article.data.title }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ article.data.title }}</h5>
                         <p class="card-text">{{ article.templateContent | markdown | truncate: 150 }}</p>
