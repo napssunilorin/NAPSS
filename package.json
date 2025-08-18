@@ -17,10 +17,9 @@
     "url": "https://github.com/napssunilorin/Unilorin-NAPSS-website/issues"
   },
   "homepage": "https://github.com/napssunilorin/Unilorin-NAPSS-website#readme",
-  "devDependencies": {
-    "@11ty/eleventy": "^3.1.2"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^14.1.0",
+    "@11ty/eleventy": "^3.1.2"
   }
 }
