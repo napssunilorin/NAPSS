@@ -95,7 +95,7 @@ permalink: /news/
 
         /* News Hero Section */
         .news-hero {
-            background-image: url('img/departmental-building.png');
+            background-image: url('/img/departmental-building.png');
             background-size: cover;
             background-position: center;
             height: 300px;
@@ -248,8 +248,7 @@ permalink: /news/
             {% for article in collections.news %}
             <div class="col-12 col-md-6 col-lg-4 news-article">
                 <div class="card">
-                    <img src="/images/uploads/{{ article.data.image }}" class="card-img-top"
-                        alt="{{ article.data.title }}">
+                    <img src="{{ article.data.image }}" class="card-img-top" alt="{{ article.data.title }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ article.data.title }}</h5>
                         <p class="card-text">{{ article.data.excerpt }}</p>
