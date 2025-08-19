@@ -3,7 +3,7 @@ backend:
   branch: main # or whatever your main branch is called
 
 media_folder: "images/uploads"
-public_folder: "/images/uploads"
+public_folder: "images/uploads" # Removed the leading slash
 
 collections:
   - name: "news"
